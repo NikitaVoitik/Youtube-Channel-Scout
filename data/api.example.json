@@ -1,0 +1,9 @@
+{
+  "_comment" : "rename to api.json",
+  "api_keys": [
+    {
+      "api_key": "AIzaSyD4fPtosyB3AI9UjX23Z8XLRg5ZVhNpm_g",
+      "credentials_file": "visionary-123456-abcdef123456.json"
+    }
+  ]
+}

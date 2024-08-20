@@ -1,0 +1,14 @@
+{
+  "scope": [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+  ],
+  "country" : "United States",
+  "spreadsheet_id": "1y8OtDxUayl1IUgVVKO15jK1h_YkIN6IhFaSUwwHXsxc",
+  "db": {
+    "db_name": "usedchannels.db",
+    "table_name": "UsedChannels"
+  }
+}

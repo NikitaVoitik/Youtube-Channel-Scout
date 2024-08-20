@@ -1,0 +1,12 @@
+{
+  "gmail": {
+    "sign_in": "a[data-action=\"sign in\"][data-label=\"header\"]",
+    "login": "input#identifierId",
+    "password": "input[name=\"Passwd\"]",
+    "next": "button:has-text(\"Next\")",
+    "compose": "div.T-I.T-I-KE.L3[role=\"button\"][gh=\"cm\"]"
+  },
+  "sogo" : {
+
+  }
+}

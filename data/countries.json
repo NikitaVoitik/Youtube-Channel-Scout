@@ -1,0 +1,146 @@
+{
+  "United States": {
+    "regionCode": "US",
+    "relevanceLanguage": "en"
+  },
+  "Canada": {
+    "regionCode": "CA",
+    "relevanceLanguage": "en"
+  },
+  "United Kingdom": {
+    "regionCode": "GB",
+    "relevanceLanguage": "en"
+  },
+  "Australia": {
+    "regionCode": "AU",
+    "relevanceLanguage": "en"
+  },
+  "India": {
+    "regionCode": "IN",
+    "relevanceLanguage": "hi"
+  },
+  "Germany": {
+    "regionCode": "DE",
+    "relevanceLanguage": "de"
+  },
+  "France": {
+    "regionCode": "FR",
+    "relevanceLanguage": "fr"
+  },
+  "Italy": {
+    "regionCode": "IT",
+    "relevanceLanguage": "it"
+  },
+  "Spain": {
+    "regionCode": "ES",
+    "relevanceLanguage": "es"
+  },
+  "Mexico": {
+    "regionCode": "MX",
+    "relevanceLanguage": "es"
+  },
+  "Brazil": {
+    "regionCode": "BR",
+    "relevanceLanguage": "pt"
+  },
+  "Japan": {
+    "regionCode": "JP",
+    "relevanceLanguage": "ja"
+  },
+  "South Korea": {
+    "regionCode": "KR",
+    "relevanceLanguage": "ko"
+  },
+  "China": {
+    "regionCode": "CN",
+    "relevanceLanguage": "zh"
+  },
+  "Russia": {
+    "regionCode": "RU",
+    "relevanceLanguage": "ru"
+  },
+  "Netherlands": {
+    "regionCode": "NL",
+    "relevanceLanguage": "nl"
+  },
+  "Sweden": {
+    "regionCode": "SE",
+    "relevanceLanguage": "sv"
+  },
+  "Norway": {
+    "regionCode": "NO",
+    "relevanceLanguage": "no"
+  },
+  "Denmark": {
+    "regionCode": "DK",
+    "relevanceLanguage": "da"
+  },
+  "Finland": {
+    "regionCode": "FI",
+    "relevanceLanguage": "fi"
+  },
+  "Poland": {
+    "regionCode": "PL",
+    "relevanceLanguage": "pl"
+  },
+  "Turkey": {
+    "regionCode": "TR",
+    "relevanceLanguage": "tr"
+  },
+  "Saudi Arabia": {
+    "regionCode": "SA",
+    "relevanceLanguage": "ar"
+  },
+  "United Arab Emirates": {
+    "regionCode": "AE",
+    "relevanceLanguage": "ar"
+  },
+  "South Africa": {
+    "regionCode": "ZA",
+    "relevanceLanguage": "en"
+  },
+  "Argentina": {
+    "regionCode": "AR",
+    "relevanceLanguage": "es"
+  },
+  "Chile": {
+    "regionCode": "CL",
+    "relevanceLanguage": "es"
+  },
+  "Colombia": {
+    "regionCode": "CO",
+    "relevanceLanguage": "es"
+  },
+  "Indonesia": {
+    "regionCode": "ID",
+    "relevanceLanguage": "id"
+  },
+  "Malaysia": {
+    "regionCode": "MY",
+    "relevanceLanguage": "ms"
+  },
+  "Philippines": {
+    "regionCode": "PH",
+    "relevanceLanguage": "en"
+  },
+  "Singapore": {
+    "regionCode": "SG",
+    "relevanceLanguage": "en"
+  },
+  "Thailand": {
+    "regionCode": "TH",
+    "relevanceLanguage": "th"
+  },
+  "Vietnam": {
+    "regionCode": "VN",
+    "relevanceLanguage": "vi"
+  },
+  "Egypt": {
+    "regionCode": "EG",
+    "relevanceLanguage": "ar"
+  },
+  "Nigeria": {
+    "regionCode": "NG",
+    "relevanceLanguage": "en"
+  }
+}
