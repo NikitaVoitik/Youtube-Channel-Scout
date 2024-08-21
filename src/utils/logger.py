@@ -5,7 +5,7 @@ root = Path.cwd()
 
 logger.add(root / 'logs' / 'mail' / 'app.log', rotation='1 day')
 logger.add(root / 'logs' / 'database' / 'app.log', rotation='1 day',
-           filter=lambda record: any(file_name in record['file'].name for file_name in ['gmail.py']))
+           filter=lambda record: any(file_name in record['file'].name for file_name in ['mail.py']))
 print(f'logger: {Path.cwd()}')
 
 

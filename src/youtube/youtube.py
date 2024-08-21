@@ -1,7 +1,6 @@
 from googleapiclient import discovery
-from google.oauth2 import service_account
-from utils.youtube import month_before_rfc3339
-from utils.load_data import load_json
+from src.utils import month_before_rfc3339
+from src.utils import load_json
 
 COUNTRY_INFO = load_json('../../data/countries.json')
 
@@ -94,7 +93,3 @@ class YouTubeService:
         ).execute()
         channel_info = response['items'][0]['snippet']
         return channel_info
-
-
-yt = YouTubeService('AIzaSyCMNPlAhO55Zh36Jr5aYvKmTzPmnQM-DYc')
-print(yt.get_video_statistics('M2AaKUCG7vA'))

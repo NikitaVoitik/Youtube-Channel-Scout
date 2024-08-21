@@ -1,6 +1,6 @@
 import sqlite3
-from utils.load_data import load_config
-from utils.logger import get_logger
+from src.utils.data import load_config
+from src.utils.logger import get_logger
 
 db_config = load_config()['db']
 logger = get_logger()
