@@ -35,15 +35,15 @@ async def main():
         email_data = await ainput()
         if " " in email_data:
             email_data = email_data.split(" ")
-        print(email_data)
-        print("" if len(email_data) == 1 else email_data[1])
+        else:
+            email_data = [email_data, ""]
         await gmail.sent_email(
             email_data[0],
             random.choice(SUBJECTS),
             random.choice(TEXTS),
-            "" if len(email_data) == 1 else email_data[1]
+            email_data[1]
         )
-        #await asyncio.sleep(random.randint(15, 30) * 60)
+        await asyncio.sleep(random.randint(15, 30) * 60)
 
 
 if __name__ == '__main__':
