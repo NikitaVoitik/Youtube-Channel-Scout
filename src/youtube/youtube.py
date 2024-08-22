@@ -1,6 +1,6 @@
 from googleapiclient import discovery
-from src.utils import month_before_rfc3339
-from src.utils import load_json
+from utils import month_before_rfc3339
+from utils import load_json
 
 COUNTRY_INFO = load_json('../../data/countries.json')
 

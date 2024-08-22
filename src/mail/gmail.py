@@ -5,7 +5,7 @@ import random
 from python_ghost_cursor.playwright_async import create_cursor
 from python_ghost_cursor.playwright_async._spoof import GhostCursor
 
-from src.utils.logger import get_logger
+from utils.logger import get_logger
 
 logger = get_logger()
 
@@ -19,19 +19,26 @@ class Gmail:
         self.page: Page | None = None
         self.browser: BrowserContext | None = None
 
-    async def _sm_delay(self):
-        if random.randint(1, 100) < 3:
-            await self._random_move()
+    async def _move_cursor_randomly_left(self):
+        elements = await self.page.query_selector_all('body *')
+
+        for element in elements:
+            bounding_box = await element.bounding_box()
+            viewport = self.page.viewport_size['width']
+            if bounding_box and bounding_box['x'] < viewport / 2:
+                await self.cursor.move(element)
+                break
+
+    @staticmethod
+    async def _sm_delay():
         await asyncio.sleep(random.uniform(0.1, 0.4))
 
-    async def _md_delay(self):
-        if random.randint(1, 100) < 8:
-            await self._random_move()
+    @staticmethod
+    async def _md_delay():
         await asyncio.sleep(random.uniform(0.5, 1.1))
 
-    async def _bg_delay(self):
-        if random.randint(1, 100) < 11:
-            await self._random_move()
+    @staticmethod
+    async def _bg_delay():
         await asyncio.sleep(random.uniform(1.1, 1.8))
 
     async def _move_and_click(self, element):
@@ -39,23 +46,40 @@ class Gmail:
         await self.cursor.click(element, wait_for_click=random.randint(200, 600))
         await self._md_delay()
 
-    async def _move_and_type(self, element, text):
+    async def _move_and_type(self, element, text, allow_paste=True):
         await self._move_and_click(element)
         await self._sm_delay()
-        await self._type_text(element, text)
+        await self._type_text(element, text, allow_paste)
+        await self._md_delay()
+
+    async def _typing_mistake(self, element):
+        if random.randint(1, 100) < 5:
+            wrong_char = random.choice('abcdefghijklmnopqrstuvwxyz ')
+            await element.type(wrong_char)
+            await asyncio.sleep(random.uniform(0.5, 1.2))
+            await self._typing_mistake(element)
+            await element.press('Backspace')
+            await asyncio.sleep(random.uniform(0.5, 0.15))
+
+    async def _move_to_random_element(self):
+        elements = await self.page.query_selector_all('div')
+        random_element = random.choice(elements)
+        await self.cursor.move_to(random_element)
         await self._md_delay()
 
     @staticmethod
-    async def _type_text(element, text):
-        chance = random.randint(1, 100)
-        if chance <= 30:
-            await element.fill(text)
-            return
+    async def _type_text(element, text, allow_paste=True):
+        if allow_paste:
+            chance = random.randint(1, 100)
+            if chance <= 30:
+                await element.fill(text)
+                print('paste')
+                return
         for char in text:
             while random.randint(1, 100) < 8:
                 wrong_char = random.choice('abcdefghijklmnopqrstuvwxyz')
                 await element.type(wrong_char)
-                await asyncio.sleep(random.uniform(0.05, 0.1))
+                await asyncio.sleep(random.uniform(0.3, 0.5))
                 await element.press('Backspace')
                 await asyncio.sleep(random.uniform(0.05, 0.1))
 
@@ -67,15 +91,6 @@ class Gmail:
     async def check_login(self):
         compose_button = await self.page.query_selector(self._SELECTORS['compose'])
         return compose_button is not None
-
-    async def _random_move(self):
-        viewport = self.page.viewport_size
-        for _ in range(random.randint(5, 10)):
-            x = random.randint(0, viewport.get('width') - 1)
-            y = random.randint(0, viewport.get('height') - 1)
-
-            await self.cursor.move_to({'x': x, 'y': y})
-            await self.page.wait_for_timeout(random.randint(100, 500))
 
     async def login(self):
         logger.info('Logging in...')
@@ -127,7 +142,7 @@ class Gmail:
         if not check_login:
             await self.login()
 
-    async def sent_email(self, recipient, subject, message):
+    async def sent_email(self, recipient, subject, message: str, name=""):
         logger.info(f'Sending email to {recipient}')
         compose_button = await self.page.query_selector(self._SELECTORS['compose'])
         await self._move_and_click(compose_button)
@@ -136,11 +151,15 @@ class Gmail:
         await self._move_and_type(recipient_input, recipient)
         await self._sm_delay()
         await self.page.keyboard.press('Enter')
+        await self._bg_delay()
 
         subject_input = await self.page.wait_for_selector(self._SELECTORS['subject'])
-        await self._move_and_type(subject_input, subject)
+        await self._move_cursor_randomly_left()
+        await self._move_and_type(subject_input, subject, allow_paste=False)
 
         message_input = await self.page.wait_for_selector(self._SELECTORS['message'])
+
+        message = message.replace('{name}', f'{name}')
         await self._move_and_type(message_input, message)
         await self._bg_delay()
 
