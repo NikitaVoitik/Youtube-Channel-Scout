@@ -116,7 +116,7 @@ class Gmail:
         logger.info('Starting Gmail...')
         self.playwright = await async_playwright().start()
         self.browser = await self.playwright.chromium.launch_persistent_context(
-            user_data_dir='../../data/user_data',
+            user_data_dir='../../../data/user_data',
             headless=False,
             user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
             args=[

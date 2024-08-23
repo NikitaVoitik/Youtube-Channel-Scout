@@ -10,5 +10,9 @@
   "db": {
     "db_name": "usedchannels.db",
     "table_name": "UsedChannels"
+  },
+  "email" : {
+    "gmail" : true,
+    "sogo": false
   }
 }
