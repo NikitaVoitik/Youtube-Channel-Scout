@@ -39,8 +39,8 @@ def load_messages(path) -> [str]:
 
 CONFIG = load_config()
 MAIL_CREDS = {
-    'gmail_user': os.getenv('EMAIL_USER'),
-    'gmail_pass': os.getenv('EMAIL_PASS')
+    'gmail_user': os.getenv('GMAIL_USER'),
+    'gmail_pass': os.getenv('GMAIL_PASS')
 }
 SELECTORS = load_json('selectors.json')
 SUBJECTS = load_txt('emails/subject.txt')

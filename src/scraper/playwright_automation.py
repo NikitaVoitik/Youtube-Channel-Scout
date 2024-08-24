@@ -8,7 +8,7 @@ from python_ghost_cursor.playwright_async._spoof import GhostCursor
 class PlaywrightAutomation:
     def __init__(self):
         self.cursor: GhostCursor | None = None
-        self.playwright_instance: PlaywrightAutomation | None = None
+        self.playwright_instance: Playwright | None = None
         self.page: Page | None = None
         self.browser: BrowserContext | None = None
 

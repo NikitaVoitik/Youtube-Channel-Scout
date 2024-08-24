@@ -19,7 +19,7 @@ async def ainput() -> str:
 
 
 async def start_gmail() -> Gmail:
-    creds = {key: MAIL_CREDS[key] for key in ['gmail_pass', 'gmail_pass']}
+    creds = {key: MAIL_CREDS[key] for key in ['gmail_user', 'gmail_pass']}
     gmail = Gmail(creds, SELECTORS.get('gmail'))
     await gmail.initialise()
     return gmail

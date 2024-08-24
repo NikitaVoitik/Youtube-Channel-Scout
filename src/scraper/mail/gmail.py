@@ -8,10 +8,10 @@ logger = get_logger()
 
 
 class Gmail(PlaywrightAutomation):
-    def __init__(self, creds, selectors):
+    def __init__(self, creds: dict, selectors: dict):
         super().__init__()
-        self._SELECTORS = selectors
-        self.__creds = creds
+        self._SELECTORS: dict = selectors
+        self.__creds: dict = creds
 
     async def check_login(self):
         compose_button = await self.page.query_selector(self._SELECTORS['compose'])
@@ -25,13 +25,13 @@ class Gmail(PlaywrightAutomation):
             await self._move_and_click(sign_in_button)
 
         email_input = await self.page.wait_for_selector(self._SELECTORS['login'])
-        await self._move_and_type(email_input, self.__creds['login'])
+        await self._move_and_type(email_input, self.__creds['gmail_user'])
 
         password_button = await self.page.wait_for_selector(self._SELECTORS['next'])
         await self._move_and_click(password_button)
 
         password_input = await self.page.wait_for_selector(self._SELECTORS['password'])
-        await self._move_and_type(password_input, self.__creds['password'])
+        await self._move_and_type(password_input, self.__creds['gmail_pass'])
         password_button = await self.page.wait_for_selector(self._SELECTORS['next'])
         await self._move_and_click(password_button)
 
@@ -48,7 +48,7 @@ class Gmail(PlaywrightAutomation):
         if not check_login:
             await self.login()
 
-    async def sent_email(self, recipient, subject, message: str, name=""):
+    async def sent_email(self, recipient: str, subject: str, message: str, name: str =""):
         logger.info(f'Sending email to {recipient} by Gmail')
         compose_button = await self.page.query_selector(self._SELECTORS['compose'])
         await self._move_and_click(compose_button)
