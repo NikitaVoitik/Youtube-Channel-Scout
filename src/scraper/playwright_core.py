@@ -5,12 +5,13 @@ from python_ghost_cursor.playwright_async import create_cursor
 from python_ghost_cursor.playwright_async._spoof import GhostCursor
 
 
-class PlaywrightAutomation:
+class PlwCore:
+    _playwright_instance: Playwright | None = None
+    _browser: BrowserContext | None = None
+    _cursor: GhostCursor | None = None
+
     def __init__(self):
-        self.cursor: GhostCursor | None = None
-        self.playwright_instance: Playwright | None = None
-        self.page: Page | None = None
-        self.browser: BrowserContext | None = None
+        self._page: Page | None = None
 
     @staticmethod
     async def _sm_delay():
@@ -26,7 +27,7 @@ class PlaywrightAutomation:
 
     async def _move_and_click(self, element):
         await self._sm_delay()
-        await self.cursor.click(element, wait_for_click=random.randint(200, 600))
+        await PlwCore._cursor.click(element, wait_for_click=random.randint(200, 600))
         await self._md_delay()
 
     async def _move_and_type(self, element, text, allow_paste=True):
@@ -45,9 +46,9 @@ class PlaywrightAutomation:
             await asyncio.sleep(random.uniform(0.5, 0.15))
 
     async def _move_to_random_element(self):
-        elements = await self.page.query_selector_all('div')
+        elements = await self._page.query_selector_all('div')
         random_element = random.choice(elements)
-        await self.cursor.move_to(random_element)
+        await PlwCore._cursor.move_to(random_element)
         await self._md_delay()
 
     @staticmethod
@@ -72,8 +73,8 @@ class PlaywrightAutomation:
             await asyncio.sleep(random.uniform(0.15, 0.25))
 
     async def initialise(self):
-        self.playwright_instance = await async_playwright().start()
-        self.browser = await self.playwright_instance.chromium.launch_persistent_context(
+        PlwCore._playwright_instance = await async_playwright().start()
+        PlwCore._browser = await PlwCore._playwright_instance.chromium.launch_persistent_context(
             user_data_dir='../../../data/user_data',
             headless=False,
             user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
@@ -88,8 +89,8 @@ class PlaywrightAutomation:
         )
         await self._bg_delay()
 
-        self.page = await self.browser.new_page()
+        self._page = await PlwCore._browser.new_page()
         await self._bg_delay()
 
-        self.cursor = create_cursor(self.page)
+        PlwCore._cursor = create_cursor(self._page)
         await self._bg_delay()

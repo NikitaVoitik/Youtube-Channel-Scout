@@ -1,6 +1,7 @@
 import asyncio
 import random
 from src.scraper.gmail import Gmail
+from src.scraper.youtube import Youtube
 from utils.data import MAIL_CREDS, SELECTORS, SUBJECTS, TEXTS
 import sys
 from utils.logger import get_logger
@@ -25,9 +26,17 @@ async def start_gmail() -> Gmail:
     return gmail
 
 
+async def start_youtube() -> Youtube:
+    # creds = {key: MAIL_CREDS[key] for key in ['gmail_user', 'gmail_pass']}
+    youtube = Youtube()
+    await youtube.initialise()
+    return youtube
+
+
 async def main():
     logger.success('Application started')
     gmail = await start_gmail()
+    youtube = await start_youtube()
     while True:
         email_data = await ainput()
         if ":" in email_data:
