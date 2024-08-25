@@ -1,6 +1,6 @@
 import asyncio
 import random
-from ..playwright_automation import PlaywrightAutomation
+from playwright_automation import PlaywrightAutomation
 
 from utils.logger import get_logger
 
@@ -48,7 +48,7 @@ class Gmail(PlaywrightAutomation):
         if not check_login:
             await self.login()
 
-    async def sent_email(self, recipient: str, subject: str, message: str, name: str =""):
+    async def sent_email(self, recipient: str, subject: str, message: str, name: str = ""):
         logger.info(f'Sending email to {recipient} by Gmail')
         compose_button = await self.page.query_selector(self._SELECTORS['compose'])
         await self._move_and_click(compose_button)

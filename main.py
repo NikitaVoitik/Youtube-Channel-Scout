@@ -1,6 +1,6 @@
 import asyncio
 import random
-from src.scraper.mail.gmail import Gmail
+from src.scraper.gmail import Gmail
 from utils.data import MAIL_CREDS, SELECTORS, SUBJECTS, TEXTS
 import sys
 from utils.logger import get_logger
