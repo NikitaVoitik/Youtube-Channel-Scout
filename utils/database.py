@@ -35,7 +35,7 @@ class Database:
         else:
             logger.success("Table created successfully")
 
-    def insert(self, values: dict) -> bool:
+    def insert(self, values: dict) -> None:
         insert_table_script = (
             f"INSERT INTO {self.table_name} "
             f"({', '.join(values.keys())}) "

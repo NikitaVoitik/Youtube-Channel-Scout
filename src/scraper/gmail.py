@@ -1,5 +1,3 @@
-import asyncio
-import random
 from src.scraper.playwright_core import PlwCore
 
 from utils.logger import get_logger
@@ -40,6 +38,7 @@ class Gmail(PlwCore):
     async def initialise(self):
         logger.info('Initialising Gmail...')
         await super().initialise()
+
         await self._page.goto("https://mail.google.com/mail/u/0/?pli=1")
         await self._bg_delay()
         logger.success('Gmail initialised')
@@ -50,7 +49,8 @@ class Gmail(PlwCore):
 
     async def sent_email(self, recipient: str, subject: str, message: str, name: str = ""):
         logger.info(f'Sending email to {recipient} by Gmail')
-        compose_button = await self._page.query_selector(self._SELECTORS['compose'])
+        await self._page.bring_to_front()
+        compose_button = await self._page.wait_for_selector(self._SELECTORS['compose'])
         await self._move_and_click(compose_button)
 
         recipient_input = await self._page.wait_for_selector(self._SELECTORS['recipient'])
@@ -60,10 +60,11 @@ class Gmail(PlwCore):
         await self._bg_delay()
 
         subject_input = await self._page.wait_for_selector(self._SELECTORS['subject'])
-        await self._move_and_type(subject_input, subject, allow_paste=False)
+        await subject_input.click()
+        await self._sm_delay()
+        await self._type_text(subject_input, subject)
 
         message_input = await self._page.wait_for_selector(self._SELECTORS['message'])
-
         message = message.replace('{name}', f'{name}')
         await self._move_and_type(message_input, message)
         await self._bg_delay()

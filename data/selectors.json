@@ -4,7 +4,7 @@
     "login": "input#identifierId",
     "password": "input[name=\"Passwd\"]",
     "next": "button:has-text(\"Next\")",
-    "compose": "div.T-I.T-I-KE.L3[role=\"button\"][gh=\"cm\"]",
+    "compose": "div.T-I.T-I-KE.L3[role=\"button\"]",
     "recipient" : "input.agP.aFw[aria-label=\"To recipients\"]",
     "subject": "input[placeholder=\"Subject\"]",
     "message": "div.Am.aiL.Al[aria-label=\"Message Body\"][role=\"textbox\"]",

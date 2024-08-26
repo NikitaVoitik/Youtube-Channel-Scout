@@ -1,4 +1,4 @@
-from playwright.async_api import async_playwright, Page, BrowserContext, Playwright
+from playwright.async_api import async_playwright, Page, BrowserContext, Playwright, Browser
 import asyncio
 import random
 from python_ghost_cursor.playwright_async import create_cursor
@@ -7,11 +7,12 @@ from python_ghost_cursor.playwright_async._spoof import GhostCursor
 
 class PlwCore:
     _playwright_instance: Playwright | None = None
-    _browser: BrowserContext | None = None
-    _cursor: GhostCursor | None = None
+    _browser: Browser
 
     def __init__(self):
+        self._context: BrowserContext | None = None
         self._page: Page | None = None
+        self._cursor: GhostCursor | None = None
 
     @staticmethod
     async def _sm_delay():
@@ -27,7 +28,7 @@ class PlwCore:
 
     async def _move_and_click(self, element):
         await self._sm_delay()
-        await PlwCore._cursor.click(element, wait_for_click=random.randint(200, 600))
+        await self._cursor.click(element, wait_for_click=random.randint(200, 600))
         await self._md_delay()
 
     async def _move_and_type(self, element, text, allow_paste=True):
@@ -48,7 +49,7 @@ class PlwCore:
     async def _move_to_random_element(self):
         elements = await self._page.query_selector_all('div')
         random_element = random.choice(elements)
-        await PlwCore._cursor.move_to(random_element)
+        await self._cursor.move_to(random_element)
         await self._md_delay()
 
     @staticmethod
@@ -74,23 +75,23 @@ class PlwCore:
 
     async def initialise(self):
         PlwCore._playwright_instance = await async_playwright().start()
-        PlwCore._browser = await PlwCore._playwright_instance.chromium.launch_persistent_context(
-            user_data_dir='../../../data/user_data',
-            headless=False,
+        PlwCore._browser = await PlwCore._playwright_instance.chromium.launch(headless=False,
+                                                                              args=[
+                                                                                  "--disable-blink-features=AutomationControlled",
+                                                                                  "--no-sandbox",
+                                                                                  "--disable-setuid-sandbox",
+                                                                                  "--disable-web-security",
+                                                                                  "--disable-dev-profile",
+                                                                                  "--disable-extensions"
+                                                                              ]
+                                                                              )
+        await self._bg_delay()
+        self._context = await PlwCore._browser.new_context(
             user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-web-security",
-                "--disable-dev-profile",
-                "--disable-extensions"
-            ]
         )
+        self._page = await self._context.new_page()
+        await self._page.set_viewport_size({"width": 1280, "height": 800})
         await self._bg_delay()
 
-        self._page = await PlwCore._browser.new_page()
-        await self._bg_delay()
-
-        PlwCore._cursor = create_cursor(self._page)
+        self._cursor = create_cursor(self._page)
         await self._bg_delay()
