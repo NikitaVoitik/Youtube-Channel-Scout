@@ -26,6 +26,22 @@ class PlwCore:
     async def _bg_delay():
         await asyncio.sleep(random.uniform(1.1, 1.8))
 
+    @staticmethod
+    async def _get_outer_html(element):
+        await element.evaluate('(element) => element.outerHTML')
+
+    async def _is_child(self, child, parent):
+        is_child = await self._page.evaluate(
+            '''(parent, child) => parent.contains(child)''',
+            [parent, child]
+        )
+        return is_child
+
+    async def _move(self, element):
+        await self._sm_delay()
+        await self._cursor.move(element)
+        await self._md_delay()
+
     async def _move_and_click(self, element):
         await self._sm_delay()
         await self._cursor.click(element, wait_for_click=random.randint(200, 600))
@@ -52,8 +68,7 @@ class PlwCore:
         await self._cursor.move_to(random_element)
         await self._md_delay()
 
-    @staticmethod
-    async def _type_text(element, text, allow_paste=True):
+    async def _type_text(self, element, text, allow_paste=True):
         if allow_paste:
             chance = random.randint(1, 100)
             if chance <= 30:
@@ -61,12 +76,7 @@ class PlwCore:
                 print('paste')
                 return
         for char in text:
-            while random.randint(1, 100) < 8:
-                wrong_char = random.choice('abcdefghijklmnopqrstuvwxyz')
-                await element.type(wrong_char)
-                await asyncio.sleep(random.uniform(0.3, 0.5))
-                await element.press('Backspace')
-                await asyncio.sleep(random.uniform(0.05, 0.1))
+            await self._typing_mistake(element)
 
             await element.type(char)
             if char == " ":

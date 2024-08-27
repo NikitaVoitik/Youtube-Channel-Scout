@@ -5,12 +5,19 @@
     "password": "input[name=\"Passwd\"]",
     "next": "button:has-text(\"Next\")",
     "compose": "div.T-I.T-I-KE.L3[role=\"button\"]",
-    "recipient" : "input.agP.aFw[aria-label=\"To recipients\"]",
+    "recipient": "input.agP.aFw[aria-label=\"To recipients\"]",
     "subject": "input[placeholder=\"Subject\"]",
     "message": "div.Am.aiL.Al[aria-label=\"Message Body\"][role=\"textbox\"]",
     "send": "div.T-I.J-J5-Ji.aoO.v7.T-I-atl[role=\"button\"]"
   },
-  "sogo" : {
-
+  "sogo": {
+  },
+  "youtube": {
+    "cookies_accept": "button[aria-label=\"Accept the use of cookies and other data for the purposes described\"]",
+    "searchbar": "input[placeholder=\"Search\"]",
+    "search_button": "button[aria-label=\"Search\"]",
+    "channel": "a.yt-simple-endpoint.style-scope.yt-formatted-string",
+    "video": "a#video-title-link.yt-simple-endpoint.focus-on-expand.style-scope.ytd-rich-grid-media",
+    "notify_me": "button.yt-spec-button-shape-next.yt-spec-button-shape-next--tonal.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--size-s"
   }
 }
