@@ -55,6 +55,7 @@ async def main():
     while True:
         gmail_task = asyncio.create_task(start_email_reading(gmail))
         # youtube_task = asyncio.create_task(youtube.search(["「コードギアス 反逆のルルーシュ」STAGE4~6【1週間限定】"]))
+
         await gmail_task
         # await asyncio.gather(gmail_task, youtube_task)
 
