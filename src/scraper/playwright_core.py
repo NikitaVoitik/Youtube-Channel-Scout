@@ -37,26 +37,27 @@ class PlwCore:
         )
         return is_child
 
-    async def _move(self, element):
+    async def _move(self, element, padding_percentage: int = 0):
         await self._sm_delay()
-        await self._cursor.move(element)
+        await self._cursor.move(element, padding_percentage=padding_percentage)
         await self._md_delay()
 
-    async def _move_and_click(self, element):
+    async def _move_and_click(self, element, padding_percentage: int = 0):
         await self._sm_delay()
-        await self._cursor.click(element, wait_for_click=random.randint(200, 600))
+        await self._cursor.click(element, wait_for_click=random.randint(200, 600),
+                                 padding_percentage=padding_percentage)
         await self._md_delay()
 
-    async def _move_and_type(self, element, text, allow_paste=True):
-        await self._move_and_click(element)
+    async def _move_and_type(self, element, text, allow_paste=True, padding_percentage: int = 0):
+        await self._move_and_click(element, padding_percentage)
         await self._sm_delay()
         await self._type_text(element, text, allow_paste)
         await self._md_delay()
 
-    async def _typing_mistake(self, element):
-        if random.randint(1, 100) < 5:
+    async def _typing_mistake(self, element, chance=3):
+        if random.randint(1, 100) < chance:
             wrong_char = random.choice('abcdefghijklmnopqrstuvwxyz ')
-            await element.type(wrong_char)
+            await element.type(wrong_char, chance=20)
             await asyncio.sleep(random.uniform(0.5, 1.2))
             await self._typing_mistake(element)
             await element.press('Backspace')
